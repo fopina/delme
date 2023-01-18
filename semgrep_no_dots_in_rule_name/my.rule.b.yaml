@@ -1,0 +1,6 @@
+rules:
+  - id: my.rule.b
+    message: do not import
+    languages: [python]
+    severity: INFO
+    pattern: import package_a
