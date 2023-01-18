@@ -29,3 +29,5 @@ $ semgrep --test ./
 Found rule id mismatch - file=/Users/fopina/Documents/delme/semgrep_no_dots_in_rule_name/my.rule.a.py 'ruleid' annotation with no YAML rule={'my.rule.a'}
 Failing due to rule id mismatch. There is a test denoted with 'ruleid: <rule name>' where the rule name does not exist or is not expected in the test file.
 ```
+
+https://github.com/returntocorp/semgrep/issues/6880
