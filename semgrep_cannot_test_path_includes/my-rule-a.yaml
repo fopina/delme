@@ -1,0 +1,9 @@
+rules:
+  - id: my-rule-a
+    message: do not import
+    languages: [python]
+    severity: INFO
+    pattern: import package_b
+    paths:
+      include:
+      - views.py
