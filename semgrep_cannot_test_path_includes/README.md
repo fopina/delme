@@ -42,3 +42,5 @@ As is, the only workaround I've found is to include the test file in the path in
       - views.py
       - my-rule-a.thiscannotbeusedanywherebuttests.py
 ```
+
+https://github.com/returntocorp/semgrep/issues/5487
