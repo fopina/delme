@@ -1,0 +1,12 @@
+rules:
+  - id: restricted-requests-no-put
+    message: no put
+    languages: [python]
+    severity: ERROR
+    pattern: requests.put
+
+  - id: restricted-requests-no-get
+    message: no get
+    languages: [python]
+    severity: ERROR
+    pattern: requests.get
