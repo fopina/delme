@@ -19,6 +19,8 @@ services:
       DKRON_SERVER: 1
       DKRON_NODE_NAME: dkron1
       DKRON_BOOTSTRAP_EXPECT: 1
+    volumes:
+      - ./dkron.data:/ext/data
     ports:
       - 8888:8080
     networks:
@@ -32,4 +34,4 @@ services:
     networks:
       vpcbr:
     deploy:
-      replicas: 3
+      replicas: 1

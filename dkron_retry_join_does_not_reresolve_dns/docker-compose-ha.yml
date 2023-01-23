@@ -1,0 +1,68 @@
+version: '3.7'
+
+x-common: &base
+  image: dkron/dkron:3.2.1
+  command: agent
+
+networks:
+  vpcbr:
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
+
+services:
+  server:
+    <<: *base
+    environment:
+      DKRON_DATA_DIR: /ext/data
+      DKRON_SERVER: 1
+      DKRON_NODE_NAME: dkron1
+      DKRON_BOOTSTRAP_EXPECT: ${TEST_EXPECT:-0}
+      DKRON_RETRY_JOIN: server2,server3
+    volumes:
+      - ./dkron1.data:/ext/data
+    ports:
+      - 8888:8080
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.${TEST_NUMBER:-20}
+  
+  server2:
+    <<: *base
+    environment:
+      DKRON_DATA_DIR: /ext/data
+      DKRON_SERVER: 1
+      DKRON_NODE_NAME: dkron2
+      DKRON_RETRY_JOIN: server,server3
+    volumes:
+      - ./dkron2.data:/ext/data
+    ports:
+      - 8889:8080
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.19
+
+  server3:
+    <<: *base
+    environment:
+      DKRON_DATA_DIR: /ext/data
+      DKRON_SERVER: 1
+      DKRON_NODE_NAME: dkron3
+      DKRON_RETRY_JOIN: server,server2
+    volumes:
+      - ./dkron3.data:/ext/data
+    ports:
+      - 8890:8080
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.18
+
+  agents:
+    <<: *base
+    environment:
+      DKRON_RETRY_JOIN: server,server2,server3
+    networks:
+      vpcbr:
+    deploy:
+      replicas: 1
